@@ -17,11 +17,9 @@ include(libjpeg)
 include(libtiff)
 include(freetype2)
 
-external_source (qt4
-    4.8.3
-    qt-everywhere-opensource-src-4.8.3.tar.gz
-    a663b6c875f8d7caa8ac9c30e4a4ec3b
-    http://download.qt-project.org/official_releases/qt/4.8/4.8.3)
+external_git_repo(qt4
+	4.8
+	https://github.com/qtproject/qt)
 
 message ("Installing ${qt4_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 
@@ -42,8 +40,8 @@ endif()
 ExternalProject_Add(${qt4_NAME}
     DEPENDS             ${freetype2_NAME}
     PREFIX              ${BUILDEM_DIR}
-    URL                 ${qt4_URL}
-    URL_MD5             ${qt4_MD5}
+	GIT_REPOSITORY	${qt4_URL}
+	GIT_TAG		v4.8.5
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} echo "yes" | ${qt4_SRC_DIR}/configure # pipe "yes" to stdin to accept the license.
