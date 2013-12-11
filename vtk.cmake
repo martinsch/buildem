@@ -35,7 +35,10 @@ ExternalProject_Add(${vtk_NAME}
     URL                 ${vtk_URL}
     URL_MD5             ${vtk_MD5}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND       ""
+    PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
+			# This patch fixes a duplicate symbols linker error that occurs
+			# using the clang compiler due to a wrong ifdef
+			${vtk_SRC_DIR}/Utilities/vtktiff/tif_config.h.in ${PATCH_DIR}/vtktiff.patch
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} ${vtk_SRC_DIR}
         -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
         -DBUILD_SHARED_LIBS:BOOL=ON
