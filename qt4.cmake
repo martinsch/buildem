@@ -41,7 +41,7 @@ ExternalProject_Add(${qt4_NAME}
     DEPENDS             ${freetype2_NAME}
     PREFIX              ${BUILDEM_DIR}
 	GIT_REPOSITORY	${qt4_URL}
-	GIT_TAG		v4.8.5
+	GIT_TAG		4.8
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} echo "yes" | ${qt4_SRC_DIR}/configure # pipe "yes" to stdin to accept the license.
