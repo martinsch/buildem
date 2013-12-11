@@ -40,6 +40,11 @@ if (NOT libxml2_NAME)
     #TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
     )
 
+  if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
+    set (libxml2_LIBRARIES ${BUILDEM_DIR}/lib/libxml2.dylib)
+  else()
+    set (libxml2_LIBRARIES ${BUILDEM_DIR}/lib/libxml2.so)
+  endif()
 
   endif(NOT libxml2_NAME)
   
