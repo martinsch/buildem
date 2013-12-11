@@ -83,7 +83,7 @@ ExternalProject_Add(${vigra_NAME}
         -DCMAKE_CXX_FLAGS=-pthread
         -DCMAKE_CXX_LINK_FLAGS=-pthread
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
-    TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
+#    TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
 )
 

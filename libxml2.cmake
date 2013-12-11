@@ -37,7 +37,7 @@ if (NOT libxml2_NAME)
         CPPFLAGS=-I${BUILDEM_DIR}/include
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
-    TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
+    #TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
     )
 
 
