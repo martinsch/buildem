@@ -53,7 +53,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # Important to use FALLBACK variable.
     # https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/DynamicLibraries/100-Articles/DynamicLibraryUsageGuidelines.html
     set (BUILDEM_LD_LIBRARY_VAR "DYLD_FALLBACK_LIBRARY_PATH")
-    set (BUILDEM_PLATFORM_SPECIFIC_ENV "MACOSX_DEPLOYMENT_TARGET=10.5")
+    set (BUILDEM_PLATFORM_SPECIFIC_ENV "MACOSX_DEPLOYMENT_TARGET=10.9")
     set (BUILDEM_PLATFORM_DYLIB_EXTENSION "dylib")
 else()
     set (BUILDEM_LD_LIBRARY_VAR "LD_LIBRARY_PATH")
