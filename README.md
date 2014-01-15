@@ -209,9 +209,9 @@ ExternalProject_Add(${libtiff_NAME}
         --prefix=${BUILDEM_DIR}
         LDFLAGS=${BUILDEM_LDFLAGS}
         CPPFLAGS=-I${BUILDEM_DIR}/include
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 
 endif (NOT libtiff_NAME)
@@ -333,10 +333,23 @@ ilastik requires the following additional packages, not included in BuildEM:
 
 To build ilastik on linux, your system also needs the following packages, not included in BuildEM:
 
-* libxext-devel
-* libgl1-mesa-devel
-* libxt-devel
-* libxml2-devel (build of vtk's xml failed)
+* libxext-dev
+* libgl1-mesa-dev
+* libxt-dev
+* libxml2-dev (build of vtk's xml failed)
+* libfontconfig1-dev
+
+If you plan to use ilastik (or any Qt app) with the X11 windowing system,
+you must also install the following packages before you build Qt.
+For details, see:
+http://qt-project.org/doc/qt-4.8/install-x11.html
+http://qt-project.org/doc/qt-4.8/requirements-x11.html
+
+* libxfixes-dev
+* libxrender-dev
+* libxcursor-dev
+* libxrandr-dev
+* libxinerama-dev
 
 If you want do distribute your ilastik build to other systems (e.g. you built on Ubuntu and want to distribute it to other Ubuntu machines) the target machines will need to fulfill the following requirements:
 * git (to be able to pull more recent versions of ilastik, lazyflow and volumina)

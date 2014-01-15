@@ -38,7 +38,7 @@ endif()
 # (This builds everything that ilastik needs.)
 
 ExternalProject_Add(${qt4_NAME}
-    DEPENDS             ${freetype2_NAME}
+    DEPENDS             ${freetype2_NAME} ${zlib_NAME} ${libpng_NAME} ${libjpeg_NAME} ${libtiff_NAME}
     PREFIX              ${BUILDEM_DIR}
 	GIT_REPOSITORY	${qt4_URL}
 	GIT_TAG		4.8
@@ -91,9 +91,9 @@ ExternalProject_Add(${qt4_NAME}
         -I${BUILDEM_DIR}/include
         -L${BUILDEM_DIR}/lib
         ${EXTRA_QT4_CONFIG_FLAGS}
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
-    TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
+    TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 
 set_target_properties(${qt4_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

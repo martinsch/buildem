@@ -31,7 +31,7 @@ include (pgmlink)
 include (scikit-learn)
 
 # select the desired ilastik commit
-set(DEFAULT_ILASTIK_VERSION "20131203")
+set(DEFAULT_ILASTIK_VERSION "20131205")
 IF(NOT DEFINED ILASTIK_VERSION)
     SET(ILASTIK_VERSION "${DEFAULT_ILASTIK_VERSION}")
 ENDIF()
@@ -47,11 +47,14 @@ set(lazyflow_SRC_DIR "${ilastik_SRC_DIR}/lazyflow")
 
 if("${ILASTIK_VERSION}" STREQUAL "master")
 
-    set(ILASTIK_UPDATE_COMMAND cd lazyflow && git checkout master && git pull && cd .. && cd volumina && git checkout master && git pull && cd .. && cd ilastik && git checkout master && git pull && cd ..)
+    set(ILASTIK_UPDATE_COMMAND git checkout master && git pull && git submodule update --init --recursive
+                               cd lazyflow && git checkout master && git pull && git submodule update && cd .. &&
+                               cd volumina && git checkout master && git pull && cd .. &&
+                               cd ilastik && git checkout master && git pull && cd ..)
 
 else()
 
-    set(ILASTIK_UPDATE_COMMAND git checkout ${ILASTIK_VERSION} && git submodule update)
+    set(ILASTIK_UPDATE_COMMAND git checkout ${ILASTIK_VERSION} && git submodule update --init --recursive)
     
 endif()
     
@@ -85,7 +88,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
             -DPYTHON_NUMPY_INCLUDE_DIR=${PYTHON_PREFIX}/lib/python2.7/site-packages/numpy/core/include
             -DVIGRA_NUMPY_CORE_LIBRARY=${PYTHON_PREFIX}/lib/python2.7/site-packages/vigra/vigranumpycore.so
             ${lazyflow_SRC_DIR}/lazyflow/drtile
-        BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
+        BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
         TEST_COMMAND        ${BUILDEM_DIR}/bin/ilastik_headless_test
         INSTALL_COMMAND     ""
     )
@@ -103,7 +106,7 @@ else()
 #            -DCMAKE_PREFIX_PATH=${BUILDEM_DIR}
 #            -DVIGRA_ROOT=${BUILDEM_DIR}
             ${lazyflow_SRC_DIR}/lazyflow/drtile
-        BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
+        BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
         TEST_COMMAND        ${BUILDEM_DIR}/bin/ilastik_headless_test
         INSTALL_COMMAND     ""
     )
