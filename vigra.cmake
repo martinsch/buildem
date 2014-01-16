@@ -49,6 +49,11 @@ else()
     set(VIGRA_UPDATE_COMMAND git checkout ${VIGRA_VERSION})
 endif()
 
+set(VIGRA_CXX_FLAGS "")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	set(VIGRA_CXX_FLAGS "-ftemplate-depth=1024")	
+endif()
+
 message ("Installing ${vigra_NAME}/${VIGRA_VERSION} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${vigra_NAME}
     DEPENDS             ${libjpeg_NAME} ${libtiff_NAME} ${libpng_NAME} ${openexr_NAME} ${libfftw_NAME}
@@ -80,7 +85,7 @@ ExternalProject_Add(${vigra_NAME}
         -DFFTW3F_LIBRARY=
         -DFFTW3_INCLUDE_DIR=${BUILDEM_DIR}/include
         -DFFTW3_LIBRARY=${BUILDEM_DIR}/lib/libfftw3.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
-        -DCMAKE_CXX_FLAGS=-pthread
+        -DCMAKE_CXX_FLAGS=-pthread ${VIGRA_CXX_FLAGS}
         -DCMAKE_CXX_LINK_FLAGS=-pthread
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
