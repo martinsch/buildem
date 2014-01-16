@@ -96,6 +96,13 @@ ExternalProject_Add(${qt4_NAME}
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+	ExternalProject_Add_Step(${qt4_NAME} ${qt4_NAME}-create-symlinks
+	   COMMAND "for i in `ls ${BUILDEM_DIR}/lib | grep \.framework`; do ln -s ${BUILDEM_DIR}/lib/$i/Headers ${BUILDEM_DIR}/include/`echo $i | sed 's/\.framework//g'`; done"
+	   DEPENDEES install
+	)
+endif()
+
 set_target_properties(${qt4_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT qt4_NAME)
