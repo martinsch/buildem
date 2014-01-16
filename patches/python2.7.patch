@@ -1,0 +1,15 @@
+--- __init__.py	2014-01-16 13:26:31.000000000 +0100
++++ __init__.py.orig	2014-01-16 13:22:07.000000000 +0100
+@@ -116,9 +116,10 @@
+         except (ValueError, KeyError):
+             num = 0
+     elif 'bsd' in sys.platform or sys.platform == 'darwin':
+-        comm = '/sbin/sysctl -n hw.ncpu'
+         if sys.platform == 'darwin':
+-            comm = '/usr/' + comm
++            comm = '/usr/sbin/sysctl -n hw.activecpu'
++	else:
++	    comm = '/sbin/sysctl -n hw.ncpu'
+         try:
+             with os.popen(comm) as p:
+                 num = int(p.read())
