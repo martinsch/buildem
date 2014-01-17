@@ -44,7 +44,7 @@ ExternalProject_Add(${qt4_NAME}
 	GIT_TAG		4.8
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
-    CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} echo "yes" | ${qt4_SRC_DIR}/configure # pipe "yes" to stdin to accept the license.
+    CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} env CXXFLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS} echo "yes" | ${qt4_SRC_DIR}/configure # pipe "yes" to stdin to accept the license.
         --prefix=${BUILDEM_DIR}
         -opensource
         -arch x86_64

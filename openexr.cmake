@@ -50,8 +50,8 @@ ExternalProject_Add(${openexr_NAME}
         --prefix=${BUILDEM_DIR}
         --disable-ilmbasetest
         PKG_CONFIG_PATH=${BUILDEM_PKGCONFIG_DIR}
-        LDFLAGS=${BUILDEM_LDFLAGS}
-        CPPFLAGS=-I${BUILDEM_DIR}/include
+        "LDFLAGS=${BUILDEM_LDFLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )

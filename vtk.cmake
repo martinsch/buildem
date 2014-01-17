@@ -42,6 +42,7 @@ ExternalProject_Add(${vtk_NAME}
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} ${vtk_SRC_DIR}
         -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
         -DBUILD_SHARED_LIBS:BOOL=ON
+        -DCMAKE_CXX_FLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS}
         # These python settings must be manually specified for the mac build (maybe not for linux, but it shouldn't hurt)
         -DVTK_PYTHON_SETUP_ARGS=--prefix=${PYTHON_PREFIX}
         -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_PATH}

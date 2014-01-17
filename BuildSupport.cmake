@@ -49,6 +49,10 @@ if (NOT EXISTS ${BUILDEM_SRC_DIR})
     file (MAKE_DIRECTORY ${BUILDEM_SRC_DIR})
 endif ()
 
+if (NOT EXISTS /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk)
+	message (FATAL_ERROR "ERROR: XCode and the OSX 10.9 SDK have to be installed. Please install XCode from the AppStore")
+endif ()
+
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # Important to use FALLBACK variable.
     # https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/DynamicLibraries/100-Articles/DynamicLibraryUsageGuidelines.html

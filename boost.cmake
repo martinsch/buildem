@@ -45,8 +45,8 @@ ExternalProject_Add(${boost_NAME}
         --with-libraries=date_time,filesystem,python,regex,serialization,system,test,thread,program_options,chrono
         --with-python=${PYTHON_EXE} 
         --prefix=${BUILDEM_DIR}
-        LDFLAGS=${BUILDEM_LDFLAGS}
-        CPPFLAGS=-I${BUILDEM_DIR}/include
+        "LDFLAGS=${BUILDEM_LDFLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} ./b2 
         --layout=tagged
         -sNO_BZIP2=1 
