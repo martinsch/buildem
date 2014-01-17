@@ -53,7 +53,7 @@ ExternalProject_Add(${python_NAME}
     URL                 ${python_URL}
     URL_MD5             ${python_MD5}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE} ${vtk_SRC_DIR}/Lib/multiprocessing/__init__.py ${PATCH_DIR}/python2.7.patch
+    PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE} ${python_SRC_DIR}/Lib/multiprocessing/__init__.py ${PATCH_DIR}/python2.7.patch
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${python_SRC_DIR}/configure 
         --prefix=${BUILDEM_DIR}
         ${PYTHON_BINARY_TYPE_ARG}
