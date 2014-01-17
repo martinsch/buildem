@@ -53,7 +53,7 @@ ExternalProject_Add(${python_NAME}
     URL                 ${python_URL}
     URL_MD5             ${python_MD5}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE} ${python_SRC_DIR}/Lib/multiprocessing/__init__.py ${PATCH_DIR}/python2.7.patch
+    PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${python_SRC_DIR}/configure 
         --prefix=${BUILDEM_DIR}
         ${PYTHON_BINARY_TYPE_ARG}
@@ -65,6 +65,13 @@ ExternalProject_Add(${python_NAME}
 	PYTHONAPPSDIR=${BUILDEM_BIN_DIR}/${python_NAME} install
     BUILD_IN_SOURCE 1 # Required for Mac
 )
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+	ExternalProject_Add_Step(${python_NAME} ${python_NAME}-fix-readline-bug
+	   COMMAND bash ${PATCH_DIR}/python-fix-readline-bug.sh ${PYTHON_PREFIX}
+	   DEPENDEES install
+	)
+endif()
 
 set (PYTHON_INCLUDE_PATH ${PYTHON_PREFIX}/include/python2.7)
 set (PYTHON_LIBRARY_FILE ${PYTHON_PREFIX}/lib/libpython2.7.${BUILDEM_PLATFORM_DYLIB_EXTENSION})
