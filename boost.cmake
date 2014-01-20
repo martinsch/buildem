@@ -45,15 +45,15 @@ ExternalProject_Add(${boost_NAME}
         --with-libraries=date_time,filesystem,python,regex,serialization,system,test,thread,program_options,chrono
         --with-python=${PYTHON_EXE} 
         --prefix=${BUILDEM_DIR}
-        "LDFLAGS=${BUILDEM_LDFLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
-        "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} ./b2 
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} ./b2
+    	cxxflags="${BUILDEM_ADDITIONAL_CXX_FLAGS}" linkflags="${BUILDEM_ADDITIONAL_CXX_FLAGS}"
         --layout=tagged
         -sNO_BZIP2=1 
         -sZLIB_INCLUDE=${BUILDEM_DIR}/include 
         -sZLIB_SOURCE=${zlib_SRC_DIR} install
     BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} ./b2 
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} ./b2
+    	cxxflags="${BUILDEM_ADDITIONAL_CXX_FLAGS}" linkflags="${BUILDEM_ADDITIONAL_CXX_FLAGS}"
         -sNO_BZIP2=1 
         -sZLIB_INCLUDE=${BUILDEM_DIR}/include 
         -sZLIB_SOURCE=${zlib_SRC_DIR} install
