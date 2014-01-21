@@ -18,7 +18,7 @@ include(libtiff)
 include(freetype2)
 
 external_git_repo(qt4
-	682ed9df439481e1f8e8651c4aa06f1b455a2080
+	4.8 #682ed9df439481e1f8e8651c4aa06f1b455a2080
 	https://github.com/qtproject/qt)
 
 message ("Installing ${qt4_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
@@ -41,6 +41,7 @@ ExternalProject_Add(${qt4_NAME}
     DEPENDS             ${freetype2_NAME} ${zlib_NAME} ${libpng_NAME} ${libjpeg_NAME} ${libtiff_NAME}
     PREFIX              ${BUILDEM_DIR}
 	GIT_REPOSITORY	${qt4_URL}
+	GIT_TAG			4.8
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
 			# This patch fixes ilastik crashes on OSX due to an ill-shaped ellipse
