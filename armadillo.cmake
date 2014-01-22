@@ -17,6 +17,7 @@ external_source (armadillo
     armadillo-4.000.2.tar.gz
     b2891c7b59b96337c154c5d961fd40
     http://downloads.sourceforge.net/project/arma
+    "FORCE"
     )
 
 message ("Installing ${armadillo_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
@@ -26,6 +27,7 @@ ExternalProject_Add(${armadillo_NAME}
     URL                 ${armadillo_URL}
     URL_MD5             ${armadillo_MD5}
     UPDATE_COMMAND      ""
+    BUILD_COMMAND       make
     PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
     	${armadillo}/include/armadillo_bits/config.hpp ${PATCH_DIR}/armadillo.patch
 
@@ -39,6 +41,6 @@ ExternalProject_Add(${armadillo_NAME}
     TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
 )
 
-set_target_properties(${armadillo_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+# set_target_properties(${armadillo_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT armadillo_NAME)
