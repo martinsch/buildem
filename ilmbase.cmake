@@ -47,7 +47,7 @@ ExternalProject_Add(${ilmbase_NAME}
 
 if (${BUILDEM_ADDITIONAL_CXX_FLAGS} MATCHES "libstdc")
 	ExternalProject_Add_Step(${ilmbase_NAME} ${ilmbase_NAME}-configure-stdlib
-	   COMMAND bash ${PATCH_DIR}/ilmbase-fix-makefiles-stdlib.sh ${ilmbase_SRC_DIR}${ilmbase_BINARY_DIR}
+	   COMMAND bash ${PATCH_DIR}/ilmbase-fix-makefiles-stdlib.sh ${ilmbase_SRC_DIR}/../ilmbase-1.0.2-build
 	   DEPENDEES configure
 	)
 endif()

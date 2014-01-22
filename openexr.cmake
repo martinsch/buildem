@@ -58,7 +58,7 @@ ExternalProject_Add(${openexr_NAME}
 
 if (${BUILDEM_ADDITIONAL_CXX_FLAGS} MATCHES "libstdc")
 	ExternalProject_Add_Step(${openexr_NAME} ${openexr_NAME}-configure-stdlib
-	   COMMAND bash ${PATCH_DIR}/openexr-fix-makefiles-stdlib.sh ${openexr_SRC_DIR}${openexr_BINARY_DIR}
+	   COMMAND bash ${PATCH_DIR}/openexr-fix-makefiles-stdlib.sh ${openexr_SRC_DIR}/../openexr-1.6.1-build
 	   DEPENDEES configure
 	)
 endif()
