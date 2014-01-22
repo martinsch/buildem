@@ -15,7 +15,7 @@ include (PatchSupport)
 external_source (armadillo
     4.000.2
     armadillo-4.000.2.tar.gz
-    b2891c7b59b96337c154c5d961fd40
+    b2891c7b59b96337c154c5d961fd40fb
     http://downloads.sourceforge.net/project/arma
     "FORCE"
     )
