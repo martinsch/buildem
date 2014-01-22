@@ -11,6 +11,9 @@ include (ExternalSource)
 include (BuildSupport)
 include (PatchSupport)
 
+include (armadillo)
+include (boost)
+
 
 external_source (mlpack
     1.0.8
