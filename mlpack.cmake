@@ -16,7 +16,8 @@ external_source (mlpack
     1.0.8
     mlpack-1.0.8.tar.gz
     0331e12f2485b9d5d39c9d9dea618108
-    http://www.mlpack.org/files)
+    http://www.mlpack.org/files
+    "FORCE")
 
 message ("Installing ${mlpack_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${mlpack_NAME}
