@@ -11,6 +11,8 @@ include (ExternalSource)
 include (BuildSupport)
 include (PatchSupport)
 
+include (atlas)
+
 
 external_source (armadillo
     4.000.2
@@ -41,6 +43,6 @@ ExternalProject_Add(${armadillo_NAME}
     TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
 )
 
-# set_target_properties(${armadillo_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set_target_properties(${armadillo_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT armadillo_NAME)
