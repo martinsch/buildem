@@ -29,7 +29,6 @@ ExternalProject_Add(${armadillo_NAME}
     URL                 ${armadillo_URL}
     URL_MD5             ${armadillo_MD5}
     UPDATE_COMMAND      ""
-    BUILD_COMMAND       make
     PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
     	${armadillo}/include/armadillo_bits/config.hpp ${PATCH_DIR}/armadillo.patch
 
@@ -40,7 +39,6 @@ ExternalProject_Add(${armadillo_NAME}
 
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
-    TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
 )
 
 set_target_properties(${armadillo_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
