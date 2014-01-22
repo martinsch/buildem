@@ -31,8 +31,8 @@ include (yapsy)
 include (pgmlink)
 
 external_git_repo (ilastik
-    HEAD
-    http://github.com/ilastik/ilastik)
+    4ab4b1b38e034e0504082a07a55581deefec5258
+    http://github.com/martinsch/ilastik)
 
 
 message ("Installing ${ilastik_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")

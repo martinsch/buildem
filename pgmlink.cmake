@@ -17,6 +17,7 @@ include (vigra)
 include (boost)
 include (opengm)
 include (dlib)
+include (mlpack)
 
 external_git_repo (pgmlink
     HEAD
