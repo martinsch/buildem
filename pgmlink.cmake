@@ -51,7 +51,9 @@ else()
         PREFIX              ${BUILDEM_DIR}
         GIT_REPOSITORY      ${pgmlink_URL}
         UPDATE_COMMAND      ""
-        PATCH_COMMAND       ""
+        PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
+			# Patch CMakeLists as it just overwrote the CXX_FLAGS
+			${pgmlink_SRC_DIR}/CMakeLists.txt ${PATCH_DIR}/pgmlink-cmake.patch
     
         CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} ${pgmlink_SRC_DIR} 
             -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
