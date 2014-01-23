@@ -18,7 +18,7 @@ include (PatchSupport)
 external_source (lemon
     1.3
     lemon-1.3.tar.gz
-    750251a77be450ddddedab14e5163afb
+    814d97757c157c5b46a413cc39aad625
     http://lemon.cs.elte.hu/pub/sources)
 
 message ("Installing ${lemon_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
