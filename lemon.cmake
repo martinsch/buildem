@@ -19,7 +19,8 @@ external_source (lemon
     1.3
     lemon-1.3.tar.gz
     814d97757c157c5b46a413cc39aad625
-    http://lemon.cs.elte.hu/pub/sources)
+    http://lemon.cs.elte.hu/pub/sources
+    "FORCE")
 
 message ("Installing ${lemon_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${lemon_NAME}
