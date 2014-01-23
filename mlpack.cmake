@@ -13,6 +13,7 @@ include (PatchSupport)
 
 include (armadillo)
 include (boost)
+include (doxygen)
 
 
 external_source (mlpack
@@ -24,7 +25,7 @@ external_source (mlpack
 
 message ("Installing ${mlpack_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${mlpack_NAME}
-    DEPENDS             ${armadillo_NAME} ${boost_NAME}
+    DEPENDS             ${armadillo_NAME} ${boost_NAME} ${doxygen_NAME}
     PREFIX              ${BUILDEM_DIR}
     URL                 ${mlpack_URL}
     URL_MD5             ${mlpack_MD5}
@@ -39,7 +40,7 @@ ExternalProject_Add(${mlpack_NAME}
 
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
-    TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
+    # TEST_COMMAND        ${BUILDEM_ENV_STRING} make test
 )
 
 set_target_properties(${mlpack_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
