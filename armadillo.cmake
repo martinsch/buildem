@@ -30,7 +30,8 @@ ExternalProject_Add(${armadillo_NAME}
     URL_MD5             ${armadillo_MD5}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
-    	${armadillo}/include/armadillo_bits/config.hpp ${PATCH_DIR}/armadillo.patch
+    	${armadillo_SRC_DIR}/include/armadillo_bits/config.hpp
+        ${PATCH_DIR}/armadillo.patch
 
 
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} ${armadillo_SRC_DIR} 
