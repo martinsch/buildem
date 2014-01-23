@@ -16,8 +16,8 @@ include (PatchSupport)
 # For now, this means that we MUST use gcc for this package.
 # As soon as v1.3 is ready, we should try to upgrade.
 external_source (lemon
-    1.2.3
-    lemon-1.2.3.tar.gz
+    1.3
+    lemon-1.3.tar.gz
     750251a77be450ddddedab14e5163afb
     http://lemon.cs.elte.hu/pub/sources)
 
