@@ -18,19 +18,22 @@ include (cython)
 
 external_git_repo (cylemon
     HEAD
-    http://github.com/cstraehl/cylemon)
+    https://github.com/ilastik/cylemon)
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set (cylemon_SPECIAL_SETUP "--no-openmp")
+endif()
 
 message ("Installing ${cylemon_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${cylemon_NAME}
     DEPENDS             ${lemon_NAME} ${python_NAME} ${cython_NAME} ${numpy_NAME}
     PREFIX              ${BUILDEM_DIR}
     GIT_REPOSITORY      ${cylemon_URL}
+    GIT_TAG             ${cylemon_TAG}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
-    	${cylemon_SRC_DIR}/setup.py ${PATCH_DIR}/cylemon.patch
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} ${PYTHON_EXE} 
-    	setup.py build build_ext -I${BUILDEM_INCLUDE_DIR} -L${BUILDEM_LIB_DIR}
+    	setup.py --no-extra-includes ${cylemon_SPECIAL_SETUP} build build_ext -I${BUILDEM_INCLUDE_DIR} -L${BUILDEM_LIB_DIR}
     BUILD_IN_SOURCE     1
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} ${PYTHON_EXE} setup.py install
 )

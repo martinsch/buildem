@@ -1,7 +1,3 @@
-CMake build script from [buildem](https://github.com/janelia-flyem/buildem). Use this to build [ilastik](https://github.com/fblumenthal/ilastik/tree/master/install) and/or [vigra](https://github.com/fblumenthal/vigra/tree/master/install).
-
-...
-
 The BuildEM System
 ==================
 
@@ -25,7 +21,6 @@ Buildem is predicated on some basic assertions:
 * Developer attention should be minimized since developer time is very expensive compared to freely available computer time.
 * Disk space is cheap and plentiful.
 * Each application build process should be easily specified and automated.
-* Required components should be easily shared on network drives among networked computers that can share software, i.e., the computers have compatible operating systems, because intranets have excellent bandwidth.
 * Required components can be automatically built from source, and CMake is a sufficiently flexible and cross-platform tool on which to base our system.
 * Builds of all components should be specific to OS, compiler, and compiler version to minimize conflicts in [ABI](http://en.wikipedia.org/wiki/Application_binary_interface), and we are not sure that pre-compiled components (e.g., RPMs) are available for all target machines/compilers.
 * Third-party pre-built packages, like Enthought Python Distribution, are not viable due to licensing costs for cluster operation as well as inability to easily adapt to new dependencies.
@@ -37,8 +32,10 @@ Buildem requires a few installed components:
 * C/C++ and fortran compilers
 * libcurl and https support (note that these components are usually present in standard OS builds but may need to be installed explicitly)
 * git
-* CMake 2.8+
+* CMake 2.8.6+
 * python 2.6+ *if* patches or templates are used in build process.  In future, we could require a python build from source and use that instead *or* switch to a platform-independent patch/template system built into CMake.
+
+In addition, specific packages may have a few additional system requirements, depending on your platform. (See build notes sections below.) 
 
 Note that a different version of python can be built from source.  Buildem does *not* try to minimize overall build time by reusing pre-compiled packages.  The presence of multiple compiler versions across the different Fedora/RHEL versions and our very heterogeneous workstation environment requires developer attention and tracking of installs across multiple machines.  
 
@@ -208,9 +205,9 @@ ExternalProject_Add(${libtiff_NAME}
         --prefix=${BUILDEM_DIR}
         LDFLAGS=${BUILDEM_LDFLAGS}
         CPPFLAGS=-I${BUILDEM_DIR}/include
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 
 endif (NOT libtiff_NAME)
@@ -285,7 +282,8 @@ It's a good idea to have a clean environment and "source" in environment variabl
 
 Some original source repositories or tarballs require https, which may be a problem for operating systems like Scientific Linux due to absent certificates.  This issue can be sidestepped by using default non-https downloads, e.g., all downloads from janelia-flyem cache.
 
-Common build problems for individual components in the FlyEM Build System are documented in each component's CMake file (e.g. atlas.cmake).  If you see an error, check that file's comments.
+Common build problems for individual components in the FlyEM Build System are documented in each component's CMake file.  If you see an error, check that file's comments.
+For example, cpu throttling is a common build issue when building Atlas from source, and in the atlas.cmake file, we have documented how to turn off cpu frequency adjustments that defeat Atlas tuning.
 
 ## Roadmap
 
@@ -322,4 +320,37 @@ Note that the PATH is set to automatically use the more recent CMake, gcc, and g
 
 After setting the appropriate environment variables, simply run the standard installation cmake/make (with possible second cmake/make invokation) to build the system.
 
+
+## Build notes for ilastik
+
+ilastik requires the following additional packages, not included in BuildEM:
+
+* CPLEX for pgmlink (tracking)
+
+To build ilastik on linux, your system also needs the following packages, not included in BuildEM:
+
+* libxext-dev
+* libgl1-mesa-dev
+* libxt-dev
+* libxml2-dev (build of vtk's xml failed)
+* libfontconfig1-dev
+
+If you plan to use ilastik (or any Qt app) with the X11 windowing system,
+you must also install the following packages before you build Qt.
+For details, see:
+http://qt-project.org/doc/qt-4.8/install-x11.html
+http://qt-project.org/doc/qt-4.8/requirements-x11.html
+
+* libxfixes-dev
+* libxrender-dev
+* libxcursor-dev
+* libxrandr-dev
+* libxinerama-dev
+
+If you want do distribute your ilastik build to other systems (e.g. you built on Ubuntu and want to distribute it to other Ubuntu machines) the target machines will need to fulfill the following requirements:
+* git (to be able to pull more recent versions of ilastik, lazyflow and volumina)
+* libxext
+* libgl1-mesa-glx
+* libxt
+* libxml2
 

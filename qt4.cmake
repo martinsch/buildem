@@ -11,11 +11,17 @@ include (ExternalSource)
 include (BuildSupport)
 #include (PatchSupport)
 
+include(zlib)
+include(libpng)
+include(libjpeg)
+include(libtiff)
+include(freetype2)
+
 external_source (qt4
     4.8.3
     qt-everywhere-opensource-src-4.8.3.tar.gz
     a663b6c875f8d7caa8ac9c30e4a4ec3b
-    http://download.qt.nokia.com/qt/source)
+    http://download.qt-project.org/official_releases/qt/4.8/4.8.3)
 
 message ("Installing ${qt4_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 
@@ -34,7 +40,7 @@ endif()
 # (This builds everything that ilastik needs.)
 
 ExternalProject_Add(${qt4_NAME}
-    #DEPENDS             
+    DEPENDS             ${freetype2_NAME} ${zlib_NAME} ${libpng_NAME} ${libjpeg_NAME} ${libtiff_NAME}
     PREFIX              ${BUILDEM_DIR}
     URL                 ${qt4_URL}
     URL_MD5             ${qt4_MD5}
@@ -76,14 +82,20 @@ ExternalProject_Add(${qt4_NAME}
         -no-dbus
         -no-cups
         -no-nis
-        -qt-libpng 
         -release 
         -shared
         -no-accessibility 
+        -fontconfig
+        -system-zlib
+        -system-libpng
+        -system-libjpeg
+        -system-libtiff
+        -I${BUILDEM_DIR}/include
+        -L${BUILDEM_DIR}/lib
         ${EXTRA_QT4_CONFIG_FLAGS}
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
-    TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
+    TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 
 set_target_properties(${qt4_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

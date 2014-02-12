@@ -41,7 +41,7 @@ if (NOT BUILDEM_DIR)
 endif ()
 
 # URL of cache for required software tarballs
-set (DEFAULT_CACHE_URL "http://janelia-flyem.github.com/downloads" CACHE TYPE STRING)
+set (DEFAULT_CACHE_URL "http://janelia-flyem.github.io/downloads" CACHE TYPE STRING)
 
 # Define macro to set a number of variables per external project source
 macro (external_source ABBREV SRC_VERSION FILENAME MD5)
@@ -99,14 +99,26 @@ macro (external_source ABBREV SRC_VERSION FILENAME MD5)
 endmacro (external_source)
 
 # Define macro to set a number of variables per external git repo
+# Note: Besides these named args, this macro accepts the following optional args:
+#  OVERRIDE_NAME - Used to override the <package>_NAME and <package>_SRC_DIR variables set by this macro
 macro (external_git_repo ABBREV SRC_VERSION URL)
+	# Check for extra (optional) macro args.
+	set (extra_macro_args ${ARGN})
+	list(LENGTH extra_macro_args num_extra_args)
 
     # RELEASE builds are by default
     if (NOT ${ABBREV}_BUILD)
         set (${ABBREV}_BUILD "RELEASE")
     endif ()
 
-    set (external_source_name  ${ABBREV}-${SRC_VERSION})
+	# By default, package NAME and SRC_DIR are <package>-git
+    set (external_source_name  ${ABBREV}-git)
+    
+    # First optional macro arg overrides package NAME and SRC_DIR
+    if (${num_extra_args} GREATER 0)
+    	list(GET extra_macro_args 0 external_source_name)
+    endif ()
+
     message ("Setting external_git_repo: ${external_source_name}")
 
     # Append this external source name to our list of dependencies
@@ -121,6 +133,7 @@ macro (external_git_repo ABBREV SRC_VERSION URL)
     set (${ABBREV}_NAME         ${external_source_name})
     set (${ABBREV}_SRC_DIR      ${BUILDEM_DIR}/src/${external_source_name})
     set (${ABBREV}_URL          ${URL})
+    set (${ABBREV}_TAG          ${SRC_VERSION})
     set (${ABBREV}_INCLUDE_DIRS ${BUILDEM_DIR}/include)
 
 endmacro (external_git_repo)

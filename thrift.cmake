@@ -36,17 +36,23 @@ ExternalProject_Add(${thrift_NAME}
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ./configure 
         --prefix=${BUILDEM_DIR} 
-        --with-boost=${BUILDEM_DIR} 
-        PY_PREFIX=${BUILDEM_DIR}
+        --with-boost=${BUILDEM_DIR}
+        --with-openssl=${BUILDEM_DIR} 
+        --with-haskell=no
+        --with-java=no
+        --with-php=no
+        --with-perl=no
+        --with-ruby=no
+        PY_PREFIX=${PYTHON_PREFIX}
         LDFLAGS=${BUILDEM_LDFLAGS}
         CPPFLAGS=-I${BUILDEM_DIR}/include
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 
 set (thrift_STATIC_LIBRARIES ${BUILDEM_LIB_DIR}/libthrift.a)
-set (thrift_LIBRARIES ${BUILDEM_LIB_DIR}/libthrift.so)
+set (thrift_LIBRARIES ${BUILDEM_LIB_DIR}/libthrift.${BUILDEM_PLATFORM_DYLIB_EXTENSION})
 
 set_target_properties(${thrift_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 

@@ -34,9 +34,9 @@ ExternalProject_Add(${zlib_NAME}
     #    -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
     #    -DCMAKE_PREFIX_PATH=${BUILDEM_DIR}
 
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     BUILD_IN_SOURCE     1 # Configure script reqiures BUILD_IN_SOURCE
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 
 set_target_properties(${zlib_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

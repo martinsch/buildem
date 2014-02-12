@@ -24,8 +24,9 @@ ExternalProject_Add(${ann_NAME}
     URL                 ${ann_URL}
     URL_MD5             ${ann_MD5}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
-    	${ann_SRC_DIR}/CMakeLists.txt ${PATCH_DIR}/ann.patch
+    PATCH_COMMAND       ${BUILDEM_ENV_STRING} cp ${PATCH_DIR}/ann.patch ${ann_SRC_DIR}/CMakeLists.txt
+        #${BUILDEM_ENV_STRING} ${PATCH_EXE}
+    	#${ann_SRC_DIR}/CMakeLists.txt ${PATCH_DIR}/ann.patch
 
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} ${ann_SRC_DIR} 
         -DBUILD_SHARED_LIBS=ON
@@ -33,9 +34,9 @@ ExternalProject_Add(${ann_NAME}
         -DCMAKE_PREFIX_PATH=${BUILDEM_DIR}
 
 
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
-    TEST_COMMAND        "" # ${BUILDEM_ENV_STRING} make check
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
+    TEST_COMMAND        "" # ${BUILDEM_ENV_STRING} $(MAKE) check
 )
 
 set_target_properties(${ann_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

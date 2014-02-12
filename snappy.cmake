@@ -11,9 +11,9 @@ include (ExternalSource)
 include (BuildSupport)
 
 external_source (snappy
-    1.0.5
-    snappy-1.0.5.tar.gz
-    4c0af044e654f5983f4acbf00d1ac236
+    1.1.0
+    snappy-1.1.0.tar.gz
+    c8f3ef29b5281e78f4946b2d739cea4f
     http://snappy.googlecode.com/files)
 
 message ("Installing ${snappy_NAME} into build area: ${BUILDEM_DIR} ...")
@@ -29,10 +29,10 @@ ExternalProject_Add(${snappy_NAME}
         --enable-static
         LDFLAGS=${BUILDEM_LDFLAGS}
         CPPFLAGS=-I${BUILDEM_DIR}/include
-    BUILD_COMMAND     ${BUILDEM_ENV_STRING} make
+    BUILD_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE)
     BUILD_IN_SOURCE   1
-    TEST_COMMAND      ${BUILDEM_ENV_STRING} make check
-    INSTALL_COMMAND   ${BUILDEM_ENV_STRING} make install
+    TEST_COMMAND      ${BUILDEM_ENV_STRING} $(MAKE) check
+    INSTALL_COMMAND   ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 
 #ExternalProject_add_step(${snappy_NAME} install_includes

@@ -15,16 +15,19 @@ include (boost)
 include (numpy)
 include (vigra)
 
+set(CHATTY_UPDATE_COMMAND git checkout master && git pull) 
+
 external_git_repo (chatty
     HEAD
-    http://github.com/thorbenk/chatty)
+    https://github.com/thorbenk/chatty)
 
 message ("Installing ${chatty_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${chatty_NAME}
     DEPENDS             ${python_NAME} ${boost_NAME} ${numpy_NAME} ${vigra_NAME}
     PREFIX              ${BUILDEM_DIR}
     GIT_REPOSITORY      ${chatty_URL}
-    UPDATE_COMMAND      ""
+    GIT_TAG             ${chatty_TAG}
+    UPDATE_COMMAND      ${CHATTY_UPDATE_COMMAND}
     PATCH_COMMAND       ""       
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND}
     	-DCMAKE_BUILD_TYPE=Release
@@ -37,11 +40,9 @@ ExternalProject_Add(${chatty_NAME}
         -DBoost_LIBRARY_DIRS=${BUILDEM_DIR}/lib
     	${chatty_SRC_DIR}
     	
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
-
-set_target_properties(${chatty_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT chatty_NAME)
 

@@ -4,7 +4,7 @@
 
 if (NOT hdf5_NAME)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.6)
 
 include (ExternalProject)
 include (ExternalSource)
@@ -39,9 +39,9 @@ ExternalProject_Add(${hdf5_NAME}
         -DBUILD_SHARED_LIBS=ON
         -DHDF5_ENABLE_Z_LIB_SUPPORT=ON
 #        -DBUILD_TESTING=ON
-    BUILD_COMMAND           ${BUILDEM_ENV_STRING} make
-#    TEST_COMMAND        make check
-    INSTALL_COMMAND         ${BUILDEM_ENV_STRING} make install
+BUILD_COMMAND           ${BUILDEM_ENV_STRING} $(MAKE)
+#    TEST_COMMAND        $(MAKE) check
+    INSTALL_COMMAND         ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 
 set_target_properties(${hdf5_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

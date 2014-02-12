@@ -14,10 +14,11 @@ message ("Installing ${raveler_utils_NAME} into FlyEM build area: ${BUILDEM_DIR}
 ExternalProject_Add(${raveler_utils_NAME}
     PREFIX              ${BUILDEM_DIR}
     GIT_REPOSITORY      ${raveler_utils_URL}
+    GIT_TAG             ${raveler_utils_TAG}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} -DBUILDEM_DIR=${BUILDEM_DIR} ${raveler_utils_SRC_DIR}
-    BUILD_COMMAND       make
+    BUILD_COMMAND       $(MAKE)
     TEST_COMMAND        ""
     INSTALL_COMMAND     ""
 )

@@ -12,28 +12,32 @@ include (BuildSupport)
 include (PatchSupport)
 
 external_git_repo (opengm
-    HEAD
+    576dc472324a5dce40b7e9bb4c270afbd9b3da37
     https://github.com/opengm/opengm)
 
+if(CPLEX_ROOT_DIR)
+    set(CMAKE_CPLEX_ROOT_DIR "-DCPLEX_ROOT_DIR=${CPLEX_ROOT_DIR}")
+endif()
 
 message ("Installing ${opengm_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${opengm_NAME}
+    DEPENDS             ${boost_NAME}
     PREFIX              ${BUILDEM_DIR}
     GIT_REPOSITORY      ${opengm_URL}
+    GIT_TAG             ${opengm_TAG}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
 
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} ${opengm_SRC_DIR} 
-        -DBUILD_SHARED_LIBS=ON
         -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
         -DCMAKE_PREFIX_PATH=${BUILDEM_DIR}
         -DWITH_CPLEX=ON
         -DWITH_BOOST=ON
+        ${CMAKE_CPLEX_ROOT_DIR}
 
-
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
-    TEST_COMMAND        ${BUILDEM_ENV_STRING} make test
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
+    TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) test
 )
 
 set_target_properties(${opengm_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

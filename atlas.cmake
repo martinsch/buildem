@@ -11,12 +11,17 @@
 #         unreliable and an ATLAS install nonsensical. Aborting.
 #
 #       If you get this error, you must temporarily disable CPU throttling (or "Turbo Boost") while ATLAS is built.
-#       On Fedora 16, this can be done via the cpupower command:
+#       You can do this by changing the BIOS to disable SpeedStep / Turbo Boost, which prevents the OS from
+#       changing CPU frequencies on the fly.
+#
+#       On Fedora, this can be done via the cpupower command:
 #
 #         $ cpupower frequency-info # Check current settings...
 #         $ sudo cpupower frequency-set -g performance
 #
 #         See cpupower help frequency-set for more info.
+#
+#       cpupower is contained in kernel-tools package for Fedora 17+ and in cpufrequtils for Fedora 16.
 
 if (NOT atlas_NAME)
 
@@ -69,10 +74,12 @@ ExternalProject_Add(${atlas_NAME}
         --shared 
         --prefix=${BUILDEM_DIR} 
         --with-netlib-lapack-tarfile=${lapack_FILE}
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
-    TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
+    TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
+
+set (ENV{ATLAS} ${BUILDEM_DIR}/lib:${BUILDEM_DIR}/lib/libtatlas.so:${BUILDEM_DIR}/lib/libsatlas.so)
 
 set_target_properties(${atlas_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 

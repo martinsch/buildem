@@ -11,10 +11,6 @@ include (ExternalSource)
 include (BuildSupport)
 include (PatchSupport)
 
-# FIXME: v1.2.3 of lemon doesn't compile under clang.
-# From their issue tracker (#449), it looks like the next release (v1.3) will fix this.
-# For now, this means that we MUST use gcc for this package.
-# As soon as v1.3 is ready, we should try to upgrade.
 external_source (lemon
     1.3
     lemon-1.3.tar.gz
@@ -29,7 +25,12 @@ ExternalProject_Add(${lemon_NAME}
     URL_MD5             ${lemon_MD5}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
-    	${lemon_SRC_DIR}/lemon/CMakeLists.txt ${PATCH_DIR}/lemon.patch
+        # This patch fixes a build error that clang detects.
+        # (Already fixed in lemon trunk, but not in the tarball release.)
+    	${lemon_SRC_DIR}/lemon/graph_to_eps.h ${PATCH_DIR}/lemon.patch
+    	# Apparently one test file is missing from the release.
+    	# This patch removes it from CMakeLists.txt
+        ${lemon_SRC_DIR}/test/CMakeLists.txt ${PATCH_DIR}/lemon-test.patch
 
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} ${lemon_SRC_DIR} 
         -DBUILD_SHARED_LIBS=ON
@@ -43,9 +44,9 @@ ExternalProject_Add(${lemon_NAME}
         -DGLPK_INCLUDE_DIR=
         -DGLPK_ROOT_DIR=
 
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
-    # TEST_COMMAND        ${BUILDEM_ENV_STRING} make check
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
+    #TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
 )
 
 set_target_properties(${lemon_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

@@ -9,6 +9,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 include (ExternalProject)
 include (ExternalSource)
 include (BuildSupport)
+include (PatchSupport)
 
 include (libjpeg)
 
@@ -18,6 +19,13 @@ external_source (libtiff
     051c1068e6a0627f461948c365290410
     ftp://ftp.remotesensing.org/pub/libtiff)
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  set(libtiff_PATCH_COMMAND ${PATCH_EXE}
+    ${libtiff_SRC_DIR}/tools/tiffgt.c ${PATCH_DIR}/libtiff.patch )
+else()
+  set(libtiff_PATCH_COMMAND "")
+endif()
+
 message ("Installing ${libtiff_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${libtiff_NAME}
     DEPENDS             ${libjpeg_NAME}
@@ -25,14 +33,15 @@ ExternalProject_Add(${libtiff_NAME}
     URL                 ${libtiff_URL}
     URL_MD5             ${libtiff_MD5}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND       ""
+    PATCH_COMMAND       ${libtiff_PATCH_COMMAND}
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ./configure 
         --prefix=${BUILDEM_DIR}
         LDFLAGS=${BUILDEM_LDFLAGS}
         CPPFLAGS=-I${BUILDEM_DIR}/include
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
+        --disable-jbig
+        BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 
 set_target_properties(${libtiff_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

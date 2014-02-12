@@ -26,7 +26,7 @@ set (openexr_INCLUDE_DIR ${BUILDEM_INCLUDE_DIR}/OpenEXR)
 
 include_directories (${openexr_INCLUDE_DIR})
 
-if (${CMAKE_CXX_COMPILER_ID} MATCHES ".*Clang.*")
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(openexr_PATCH_COMMAND ${BUILDEM_ENV_STRING} ${PATCH_EXE}
         ${openexr_SRC_DIR}/exrmaketiled/main.cpp ${PATCH_DIR}/openexr-exrmaketiled.patch
         ${openexr_SRC_DIR}/exrenvmap/main.cpp ${PATCH_DIR}/openexr-exrenvmap.patch
@@ -52,8 +52,8 @@ ExternalProject_Add(${openexr_NAME}
         PKG_CONFIG_PATH=${BUILDEM_PKGCONFIG_DIR}
         LDFLAGS=${BUILDEM_LDFLAGS}
         CPPFLAGS=-I${BUILDEM_DIR}/include
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} make install
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 
 set_target_properties(${openexr_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
