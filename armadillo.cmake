@@ -11,7 +11,7 @@ include (ExternalSource)
 include (BuildSupport)
 include (PatchSupport)
 
-include (atlas)
+include (blas)
 
 
 external_source (armadillo
@@ -24,7 +24,7 @@ external_source (armadillo
 
 message ("Installing ${armadillo_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${armadillo_NAME}
-    DEPENDS             ${lapack_NAME} ${atlas_NAME}
+    DEPENDS             ${lapack_NAME} ${blas_NAME}
     PREFIX              ${BUILDEM_DIR}
     URL                 ${armadillo_URL}
     URL_MD5             ${armadillo_MD5}
