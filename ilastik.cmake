@@ -43,7 +43,7 @@ SET(ILASTIK_VERSION ${ILASTIK_VERSION}
     
 external_git_repo (ilastik
     HEAD
-    http://github.com/martinsch/ilastik
+    http://github.com/martinsch/buildem-ilastik
     ilastik)
 set(lazyflow_SRC_DIR "${ilastik_SRC_DIR}/lazyflow")
 
