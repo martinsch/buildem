@@ -33,7 +33,7 @@ include (nose)
 include (faulthandler)
 
 # select the desired ilastik commit
-set(DEFAULT_ILASTIK_VERSION "20131205")
+set(DEFAULT_ILASTIK_VERSION "master")
 IF(NOT DEFINED ILASTIK_VERSION)
     SET(ILASTIK_VERSION "${DEFAULT_ILASTIK_VERSION}")
 ENDIF()
