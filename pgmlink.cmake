@@ -31,6 +31,7 @@ else()
     include (opengm)
     include (dlib)
     include (mlpack)
+    include (numpy)
 
 
     include (cplex-shared)
@@ -41,7 +42,7 @@ else()
 
     message ("Installing ${pgmlink_NAME} into FlyEM build aread: ${BUILDEM_DIR} ...")
     ExternalProject_Add(${pgmlink_NAME}
-        DEPENDS             ${ann_NAME} ${lemon_NAME} ${vigra_NAME} ${boost_NAME} ${opengm_NAME}
+        DEPENDS             ${ann_NAME} ${lemon_NAME} ${vigra_NAME} ${boost_NAME} ${opengm_NAME} ${numpy_NAME}
                             ${cplex-shared} ${ilocplex-shared} ${concert-shared}
                             ${dlib_NAME} ${mlpack_NAME} 
         PREFIX              ${BUILDEM_DIR}
@@ -58,6 +59,7 @@ else()
             -DWITH_CHECKED_STL=OFF
             -DPYTHON_INCLUDE_DIR=${PYTHON_INCLUDE_PATH}
             -DPYTHON_LIBRARY=${PYTHON_LIBRARY_FILE}
+            -DVigranumpy_DIR="${BUILDEM_DIR}/lib/vigranumpy"
             ${CMAKE_CPLEX_ROOT_DIR}
     
         BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
