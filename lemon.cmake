@@ -16,6 +16,13 @@ external_source (lemon
 	lemon-1.2.4.tar.gz
 	fd89e8bf5035b02e2622a48ac7fe0641
     http://lemon.cs.elte.hu/pub/sources)
+    
+if((${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
+	set(LEMON_OSX_CONFIG -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 
+		-DCMAKE_OSX_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk)
+else()
+	set(LEMON_OSX_CONFIG "")
+endif()
 
 message ("Installing ${lemon_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${lemon_NAME}
@@ -42,6 +49,8 @@ ExternalProject_Add(${lemon_NAME}
         -DGLPK_LIBRARY=
         -DGLPK_INCLUDE_DIR=
         -DGLPK_ROOT_DIR=
+        -DCMAKE_CXX_FLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS}
+        ${LEMON_OSX_CONFIG}
 
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install

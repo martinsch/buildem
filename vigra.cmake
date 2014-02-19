@@ -59,6 +59,11 @@ set(VIGRA_WITH_BOOST_THREAD ${DEFAULT_VIGRA_WITH_BOOST_THREAD}
 	CACHE BOOL "Build Vigra with boost-thread instead of std c++11 thread")
 set(VIGRA_THREAD_SETTING "-DWITH_BOOST_THREAD=${VIGRA_WITH_BOOST_THREAD}")
 
+set(VIGRA_CXX_FLAGS "")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	set(VIGRA_CXX_FLAGS "-ftemplate-depth=1024")	
+endif()
+
 message ("Installing ${vigra_NAME}/${VIGRA_VERSION} into FlyEM build area: ${BUILDEM_DIR} ...")
 message ("**********************************************************************************")
 message ("***** WARNING: vigra test step SKIPPED for now.  Edit vigra.cmake to change. *****")
@@ -119,6 +124,7 @@ ExternalProject_Add(${vigra_NAME}
         -DFFTW3F_LIBRARY=
         -DFFTW3_INCLUDE_DIR=${BUILDEM_DIR}/include
         -DFFTW3_LIBRARY=${BUILDEM_DIR}/lib/libfftw3.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+<<<<<<< HEAD
 
         -DCMAKE_CXX_FLAGS=-pthread
         -DCMAKE_CXX_LINK_FLAGS=-pthread
@@ -126,6 +132,10 @@ ExternalProject_Add(${vigra_NAME}
         -DCMAKE_CXX_FLAGS_DEBUG="${CMAKE_CXX_FLAGS_DEBUG}"
         
         
+=======
+        "-DCMAKE_CXX_FLAGS=-pthread ${VIGRA_CXX_FLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        "-DCMAKE_CXX_LINK_FLAGS=-pthread ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+>>>>>>> 0eed7c8... Merging OSX 10.9 fixes from chaubold
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     #TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install

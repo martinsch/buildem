@@ -33,15 +33,15 @@ ExternalProject_Add(${opengm_NAME}
     GIT_REPOSITORY      ${opengm_URL}
     GIT_TAG             ${opengm_TAG}
     UPDATE_COMMAND      ""
-    # This patch adds the BUILD_PYTHON_DOCS setting, used to avoid building the sphinx documentation.
-    # Future versions of OpenGM will probably not need this patch.
-    PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE} 
-        ${opengm_SRC_DIR}/src/interfaces/python/CMakeLists.txt ${PATCH_DIR}/opengm.patch
+    PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
+			# This patch disables linking against the rt-lib on Mac for the combilp test
+			${opengm_SRC_DIR}/src/unittest/inference/CMakeLists.txt ${PATCH_DIR}/opengm-toggle-rt.patch
 
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} ${opengm_SRC_DIR} 
         -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
         -DCMAKE_PREFIX_PATH=${BUILDEM_DIR}
-        -DWITH_CPLEX=${WITH_CPLEX}
+        -DCMAKE_CXX_FLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS}
+        -DWITH_CPLEX=ON
         -DWITH_BOOST=ON
         -DWITH_HDF5=ON
         -DBUILD_PYTHON_WRAPPER=ON
