@@ -12,10 +12,11 @@ include (BuildSupport)
 include (PatchSupport)
 
 external_source (lemon
-    1.2.4
-	lemon-1.2.4.tar.gz
-	fd89e8bf5035b02e2622a48ac7fe0641
-    http://lemon.cs.elte.hu/pub/sources)
+    1.3
+    lemon-1.3.tar.gz
+    814d97757c157c5b46a413cc39aad625
+    http://lemon.cs.elte.hu/pub/sources
+    "FORCE")
     
 if((${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
 	set(LEMON_OSX_CONFIG -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 
@@ -54,7 +55,7 @@ ExternalProject_Add(${lemon_NAME}
 
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
-    TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
+    #TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
 )
 
 set_target_properties(${lemon_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
