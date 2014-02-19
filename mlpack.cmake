@@ -36,6 +36,7 @@ ExternalProject_Add(${mlpack_NAME}
         -DBUILD_SHARED_LIBS=ON
         -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
         -DCMAKE_PREFIX_PATH=${BUILDEM_DIR}
+        -DLIBXML2_INCLUDE_DIR=${BUILDEM_DIR}/include/libxml2
 
 
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} make
