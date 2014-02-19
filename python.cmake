@@ -58,13 +58,20 @@ ExternalProject_Add(${python_NAME}
         --prefix=${BUILDEM_DIR}
         ${PYTHON_BINARY_TYPE_ARG}
         ${PYTHON_DEBUG_CONFIG_ARGS}
-        LDFLAGS=${BUILDEM_LDFLAGS}
-        CPPFLAGS=-I${BUILDEM_DIR}/include
+        "LDFLAGS=${BUILDEM_LDFLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
         BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) 
 	PYTHONAPPSDIR=${BUILDEM_BIN_DIR}/${python_NAME} install
     BUILD_IN_SOURCE 1 # Required for Mac
 )
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+	ExternalProject_Add_Step(${python_NAME} ${python_NAME}-fix-readline-bug
+	   COMMAND bash ${PATCH_DIR}/python-fix-readline-bug.sh ${PYTHON_PREFIX}
+	   DEPENDEES install
+	)
+endif()
 
 set (PYTHON_INCLUDE_PATH ${PYTHON_PREFIX}/include/python2.7)
 set (PYTHON_LIBRARY_FILE ${PYTHON_PREFIX}/lib/libpython2.7.${BUILDEM_PLATFORM_DYLIB_EXTENSION})

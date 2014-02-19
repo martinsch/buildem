@@ -26,11 +26,14 @@ ExternalProject_Add(${opengm_NAME}
     GIT_REPOSITORY      ${opengm_URL}
     GIT_TAG             ${opengm_TAG}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND       ""
+    PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
+			# This patch disables linking against the rt-lib on Mac for the combilp test
+			${opengm_SRC_DIR}/src/unittest/inference/CMakeLists.txt ${PATCH_DIR}/opengm-toggle-rt.patch
 
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} ${opengm_SRC_DIR} 
         -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
         -DCMAKE_PREFIX_PATH=${BUILDEM_DIR}
+        -DCMAKE_CXX_FLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS}
         -DWITH_CPLEX=ON
         -DWITH_BOOST=ON
         ${CMAKE_CPLEX_ROOT_DIR}
