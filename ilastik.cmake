@@ -31,6 +31,8 @@ include (pgmlink)
 include (scikit-learn)
 include (nose)
 include (faulthandler)
+include (jsonschema) # Required for the dvid extension.
+include (opengm)
 
 # select the desired ilastik commit
 set(DEFAULT_ILASTIK_VERSION "master")
@@ -49,22 +51,29 @@ set(lazyflow_SRC_DIR "${ilastik_SRC_DIR}/lazyflow")
 
 if("${ILASTIK_VERSION}" STREQUAL "master")
 
-    set(ILASTIK_UPDATE_COMMAND git checkout master && git pull && git submodule update --init --recursive &&
-                               cd lazyflow && git checkout master && git pull && git submodule update && cd .. &&
-                               cd volumina && git checkout master && git pull && cd .. &&
-                               cd ilastik && git checkout master && git pull && cd ..)
+    # If the user's build is old, he might be linked to the janelia-flyem remote
+    # Force the remote to update from ilastik/ilastik-meta by removing origin and adding it again
+    set(ILASTIK_UPDATE_COMMAND git remote rm origin && git remote add origin https://github.com/ilastik/ilastik-meta &&
+                               git fetch origin &&
+                               git checkout master && git pull origin master && git submodule update --init --recursive &&
+                               cd lazyflow && git checkout master && git pull origin master && git submodule update && cd .. &&
+                               cd volumina && git checkout master && git pull origin master && cd .. &&
+                               cd ilastik && git checkout master && git pull origin master && cd ..)
 
 else()
 
-    set(ILASTIK_UPDATE_COMMAND git fetch && git checkout ${ILASTIK_VERSION} && git submodule update --init --recursive)
+    # If the user's build is old, he might be linked to the janelia-flyem remote
+    # Force the remote to update from ilastik/ilastik-meta by removing origin and adding it again
+    set(ILASTIK_UPDATE_COMMAND git remote rm origin && git remote add origin https://github.com/ilastik/ilastik-meta &&
+                               git fetch origin && git checkout ${ILASTIK_VERSION} && git submodule update --init --recursive)
     
 endif()
     
 message ("Installing ${ilastik_NAME}/${ILASTIK_VERSION} into FlyEM build area: ${BUILDEM_DIR} ...")
 
 set (ilastik_dependencies ${vigra_NAME} ${h5py_NAME} ${psutil_NAME} ${nose_NAME}
-                            ${blist_NAME} ${greenlet_NAME} ${yapsy_NAME} ${faulthandler_NAME}
-                            ${cylemon_NAME} ${scikit-learn_NAME})
+                          ${blist_NAME} ${greenlet_NAME} ${yapsy_NAME} ${faulthandler_NAME}
+                          ${cylemon_NAME} ${scikit-learn_NAME} ${jsonschema_NAME} ${opengm_NAME} )
 
 if (${build_pgmlink})
     # Tracking depends on pgmlink, which depends on CPLEX.
