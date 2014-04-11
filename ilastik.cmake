@@ -53,7 +53,7 @@ if("${ILASTIK_VERSION}" STREQUAL "master")
 
     # If the user's build is old, he might be linked to the janelia-flyem remote
     # Force the remote to update from ilastik/ilastik-meta by removing origin and adding it again
-    set(ILASTIK_UPDATE_COMMAND git remote rm origin && git remote add origin https://github.com/ilastik/ilastik-meta &&
+    set(ILASTIK_UPDATE_COMMAND git remote rm origin && git remote add origin https://github.com/martinsch/buildem-ilastik &&
                                git fetch origin &&
                                git checkout master && git pull origin master && git submodule update --init --recursive &&
                                cd lazyflow && git checkout master && git pull origin master && git submodule update && cd .. &&
@@ -64,7 +64,7 @@ else()
 
     # If the user's build is old, he might be linked to the janelia-flyem remote
     # Force the remote to update from ilastik/ilastik-meta by removing origin and adding it again
-    set(ILASTIK_UPDATE_COMMAND git remote rm origin && git remote add origin https://github.com/ilastik/ilastik-meta &&
+    set(ILASTIK_UPDATE_COMMAND git remote rm origin && git remote add origin https://github.com/martinsch/buildem-ilastik &&
                                git fetch origin && git checkout ${ILASTIK_VERSION} && git submodule update --init --recursive)
     
 endif()
