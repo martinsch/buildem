@@ -37,7 +37,7 @@ SET(boost_FLAGS )
 if(${BUILDEM_ADDITIONAL_CXX_FLAGS}} MATCHES "stdlib")
 	SET(boost_FLAGS cxxflags=${BUILDEM_ADDITIONAL_CXX_FLAGS} linkflags=${BUILDEM_ADDITIONAL_CXX_FLAGS})
 endif()
-	
+		
 
 # Add layout=tagged param to first boost install to explicitly create -mt libraries
 # some libraries require.  TODO: Possibly shore up all library find paths to only
@@ -48,6 +48,7 @@ if(BUILDEM_ADDITIONAL_CXX_FLAGS)
 else(BUILDEM_ADDITIONAL_CXX_FLAGS)
   set(CXXFLAGS_LINE "")
 endif(BUILDEM_ADDITIONAL_CXX_FLAGS)
+
 ExternalProject_Add(${boost_NAME}
     DEPENDS             ${python_NAME} ${zlib_NAME}
     PREFIX              ${BUILDEM_DIR}
@@ -60,14 +61,14 @@ ExternalProject_Add(${boost_NAME}
         --with-python=${PYTHON_EXE} 
         --prefix=${BUILDEM_DIR}
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} ./b2
-    	"${CXXFLAGS_LINE}"
+    	${boost_FLAGS}
         --layout=tagged
         -sNO_BZIP2=1 
         -sZLIB_INCLUDE=${BUILDEM_DIR}/include 
         -sZLIB_SOURCE=${zlib_SRC_DIR} install
     BUILD_IN_SOURCE     1
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} ./b2
-    	"${CXXFLAGS_LINE}"
+    	${boost_FLAGS}
         -sNO_BZIP2=1 
         -sZLIB_INCLUDE=${BUILDEM_DIR}/include 
         -sZLIB_SOURCE=${zlib_SRC_DIR} install
