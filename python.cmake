@@ -75,8 +75,8 @@ endif()
 
 set (PYTHON_INCLUDE_PATH ${PYTHON_PREFIX}/include/python2.7)
 set (PYTHON_LIBRARY_FILE ${PYTHON_PREFIX}/lib/libpython2.7.${BUILDEM_PLATFORM_DYLIB_EXTENSION})
-set (PYTHON_EXE ${PYTHON_PREFIX}/bin/python)
 set (BUILDEM_PYTHONPATH  ${PYTHON_PREFIX}/lib/python2.7:${PYTHON_PREFIX}/lib/python2.7/site-packages:${PYTHON_PREFIX}/lib)
+set (PYTHON_EXE ENV PYTHONPATH=${BUILDEM_PYTHONPATH} ${PYTHON_PREFIX}/bin/python)
 
 # Update our bin PATH variable to include the python bin path
 # (Important for Mac OS X, which uses a special python prefix.  See above)

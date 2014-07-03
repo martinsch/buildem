@@ -83,7 +83,7 @@ ExternalProject_Add(${vigra_NAME}
         -DBoost_PYTHON_LIBRARY_RELEASE=${BUILDEM_DIR}/lib/libboost_python-mt.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
         -DBoost_PYTHON_LIBRARY_DEBUG=${BUILDEM_DIR}/lib/libboost_python-mt.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
 
-        -DPYTHON_EXECUTABLE=${PYTHON_EXE}
+        -DPYTHON_EXECUTABLE=${PYTHON_PREFIX}/bin/python
         -DPYTHON_INCLUDE_PATH=${PYTHON_PREFIX}/include
         -DPYTHON_LIBRARIES=${PYTHON_PREFIX}/lib/libpython.2.7.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
         -DPYTHON_NUMPY_INCLUDE_DIR=${PYTHON_PREFIX}/lib/python2.7/site-packages/numpy/core/include
