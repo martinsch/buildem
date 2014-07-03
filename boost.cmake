@@ -31,6 +31,7 @@ set (boost_LIBS ${BUILDEM_LIB_DIR}/libboost_thread.${BUILDEM_PLATFORM_DYLIB_EXTE
                 ${BUILDEM_LIB_DIR}/libboost_filesystem.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
                 ${BUILDEM_LIB_DIR}/libboost_chrono.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
                 ${BUILDEM_LIB_DIR}/libboost_atomic.${BUILDEM_PLATFORM_DYLIB_EXTENSION} 
+                ${BUILDEM_LIB_DIR}/libboost_random.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
 )
 
 SET(boost_FLAGS )
@@ -59,7 +60,7 @@ ExternalProject_Add(${boost_NAME}
 			${boost_SRC_DIR}/boost/atomic/detail/gcc-atomic.hpp ${PATCH_DIR}/boost-clang34-part1.patch
 			${boost_SRC_DIR}/boost/atomic/detail/cas128strong.hpp ${PATCH_DIR}/boost-clang34-part2.patch
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ./bootstrap.sh 
-        --with-libraries=date_time,filesystem,python,regex,serialization,system,test,thread,program_options,chrono,atomic
+        --with-libraries=date_time,filesystem,python,regex,serialization,system,test,thread,program_options,chrono,atomic,random
         --with-python=${PYTHON_EXE} 
         --prefix=${BUILDEM_DIR}
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} ./b2
