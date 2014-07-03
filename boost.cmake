@@ -29,7 +29,15 @@ set (boost_LIBS ${BUILDEM_LIB_DIR}/libboost_thread.${BUILDEM_PLATFORM_DYLIB_EXTE
                 ${BUILDEM_LIB_DIR}/libboost_unit_test_framework.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
                 ${BUILDEM_LIB_DIR}/libboost_filesystem.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
                 ${BUILDEM_LIB_DIR}/libboost_chrono.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
-                ${BUILDEM_LIB_DIR}/libboost_atomic.${BUILDEM_PLATFORM_DYLIB_EXTENSION} )
+                ${BUILDEM_LIB_DIR}/libboost_atomic.${BUILDEM_PLATFORM_DYLIB_EXTENSION} 
+                ${BUILDEM_LIB_DIR}/libboost_random.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+)
+
+SET(boost_FLAGS )
+if(${BUILDEM_ADDITIONAL_CXX_FLAGS}} MATCHES "stdlib")
+	SET(boost_FLAGS cxxflags=${BUILDEM_ADDITIONAL_CXX_FLAGS} linkflags=${BUILDEM_ADDITIONAL_CXX_FLAGS})
+endif()
+	
 
 # Add layout=tagged param to first boost install to explicitly create -mt libraries
 # some libraries require.  TODO: Possibly shore up all library find paths to only
