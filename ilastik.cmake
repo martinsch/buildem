@@ -36,19 +36,17 @@ include (opengm)
 include (futures)
 
 # select the desired ilastik commit
-set(DEFAULT_ILASTIK_VERSION "master")
-#IF(NOT DEFINED ILASTIK_VERSION)
-#    SET(ILASTIK_VERSION "${DEFAULT_ILASTIK_VERSION}")
-#ENDIF()
-
-# always use master/HEAD
-SET(ILASTIK_VERSION ${DEFAULT_ILASTIK_VERSION}
+set(DEFAULT_ILASTIK_VERSION 18026ae2efb9e9e04046598cd5fccca3a42bcdaa) # 2014-06-11
+IF(NOT DEFINED ILASTIK_VERSION)
+    SET(ILASTIK_VERSION "${DEFAULT_ILASTIK_VERSION}")
+ENDIF()
+SET(ILASTIK_VERSION ${ILASTIK_VERSION}
     CACHE STRING "Specify ilastik branch/tag/commit to be used (default: ${DEFAULT_ILASTIK_VERSION})"
     FORCE)
     
 external_git_repo (ilastik
     HEAD
-    http://github.com/martinsch/buildem-ilastik
+    http://github.com/ilastik/buildem-ilastik
     ilastik)
 set(lazyflow_SRC_DIR "${ilastik_SRC_DIR}/lazyflow")
 
@@ -56,7 +54,7 @@ if("${ILASTIK_VERSION}" STREQUAL "master")
 
     # If the user's build is old, he might be linked to the janelia-flyem remote
     # Force the remote to update from ilastik/ilastik-meta by removing origin and adding it again
-    set(ILASTIK_UPDATE_COMMAND git remote rm origin && git remote add origin https://github.com/martinsch/buildem-ilastik &&
+    set(ILASTIK_UPDATE_COMMAND git remote rm origin && git remote add origin https://github.com/ilastik/buildem-ilastik &&
                                git fetch origin &&
                                git checkout master && git pull origin master && git submodule update --init --recursive &&
                                cd lazyflow && git checkout master && git pull origin master && git submodule update && cd .. &&
@@ -67,7 +65,7 @@ else()
 
     # If the user's build is old, he might be linked to the janelia-flyem remote
     # Force the remote to update from ilastik/ilastik-meta by removing origin and adding it again
-    set(ILASTIK_UPDATE_COMMAND git remote rm origin && git remote add origin https://github.com/martinsch/buildem-ilastik &&
+    set(ILASTIK_UPDATE_COMMAND git remote rm origin && git remote add origin https://github.com/ilastik/buildem-ilastik &&
                                git fetch origin && git checkout ${ILASTIK_VERSION} && git submodule update --init --recursive)
     
 endif()
@@ -147,6 +145,7 @@ configure_file(${TEMPLATE_DIR}/ilastik_script.template ${BUILDEM_DIR}/bin/ilasti
 # Add headless launch script for cluster processing
 set(LAUNCH_ILASTIK ilastik/ilastik/workflows/pixelClassification/pixelClassificationClusterized.py)
 configure_file(${TEMPLATE_DIR}/ilastik_script.template ${BUILDEM_DIR}/bin/ilastik_clusterized @ONLY)
+
 
 set_target_properties(${ilastik_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
