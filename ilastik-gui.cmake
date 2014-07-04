@@ -19,6 +19,7 @@ include (ilastik)
 include (qt4)
 include (pyqt4)
 include (qimage2ndarray)
+include (vtk)
 
 if (APPLE)
     include (py2app)
